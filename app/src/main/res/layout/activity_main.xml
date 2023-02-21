@@ -30,14 +30,24 @@
         tools:text="24%" />
 
     <TextView
-        android:id="@+id/tvTipLabel"
+        android:id="@+id/tvSplitLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="Tip"
+        android:layout_marginTop="45dp"
+        android:text="Split"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="@+id/tvBaseLabel"
         app:layout_constraintTop_toBottomOf="@+id/tvTipPercentLabel" />
+
+    <TextView
+        android:id="@+id/tvTipLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Tip"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="@+id/tvBaseLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvSplitLabel" />
 
     <TextView
         android:id="@+id/tvTotalLabel"
@@ -78,7 +88,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="@+id/tvTipLabel"
-        app:layout_constraintStart_toStartOf="@+id/seekBarTip"
+        app:layout_constraintStart_toStartOf="@+id/etSplitAmount"
         app:layout_constraintTop_toTopOf="@+id/tvTipLabel"
         tools:text="19.96" />
 
@@ -102,4 +112,18 @@
         app:layout_constraintStart_toStartOf="@+id/seekBarTip"
         app:layout_constraintTop_toBottomOf="@+id/seekBarTip"
         tools:text="Acceptable" />
+
+    <EditText
+        android:id="@+id/etSplitAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="8"
+        android:hint="Amount of people"
+        android:inputType="numberSigned"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSplitLabel"
+        app:layout_constraintStart_toStartOf="@+id/seekBarTip"
+        app:layout_constraintTop_toTopOf="@+id/tvSplitLabel" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

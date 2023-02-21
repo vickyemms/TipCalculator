@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvTipAmount: TextView
     private lateinit var tvTotalAmount: TextView
     private lateinit var tvTipDescription: TextView
+    private lateinit var etSplitAmount: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         tvTipAmount = findViewById(R.id.tvTipAmount)
         tvTotalAmount = findViewById(R.id.tvTotalAmount)
         tvTipDescription = findViewById(R.id.tvTipDescription)
+        etSplitAmount = findViewById(R.id.etSplitAmount)
 
         seekBarTip.progress = INITIAL_TIP_PERCENT
         tvTipPercentLabel.text = "$INITIAL_TIP_PERCENT%"
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity() {
                 tvTipPercentLabel.text = "$p1%"
                 computeTipandTotal()
                 updateTipDescription(p1)
+                Split()
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {}
@@ -59,6 +62,34 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+        etSplitAmount.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun afterTextChanged(p0: Editable?) {
+                Split()
+            }
+
+        })
+    }
+
+    private fun Split() {
+
+        if(etSplitAmount.text.isEmpty() || etBaseAmount.text.isEmpty()){
+            tvTipAmount.text = ""
+            tvTipAmount.text = ""
+            return
+        }
+
+        val baseAmount = etBaseAmount.text.toString().toDouble()
+        val splitAmount = etSplitAmount.text.toString().toInt()
+        val tipPercent = seekBarTip.progress
+        val tipAmount = baseAmount * tipPercent / 100
+        val totalAmount = (baseAmount + tipAmount) / splitAmount
+        tvTipAmount.text = "%.2f".format(tipAmount)
+        tvTotalAmount.text = "%.2f".format(totalAmount)
+
     }
 
     private fun updateTipDescription(tipPercent: Int) {

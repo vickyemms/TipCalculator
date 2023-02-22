@@ -42,9 +42,8 @@ class MainActivity : AppCompatActivity() {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
                 Log.i(TAG, "onProgressChanged $p1")
                 tvTipPercentLabel.text = "$p1%"
-                computeTipandTotal()
+                computeTipAndTotal()
                 updateTipDescription(p1)
-                Split()
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {}
@@ -58,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun afterTextChanged(p0: Editable?) {
                 Log.i(TAG, "afterTextChanged $p0")
-                computeTipandTotal()
+                computeTipAndTotal()
             }
 
         })
@@ -68,28 +67,10 @@ class MainActivity : AppCompatActivity() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun afterTextChanged(p0: Editable?) {
-                Split()
+                computeTipAndTotal()
             }
 
         })
-    }
-
-    private fun Split() {
-
-        if(etSplitAmount.text.isEmpty() || etBaseAmount.text.isEmpty()){
-            tvTipAmount.text = ""
-            tvTipAmount.text = ""
-            return
-        }
-
-        val baseAmount = etBaseAmount.text.toString().toDouble()
-        val splitAmount = etSplitAmount.text.toString().toInt()
-        val tipPercent = seekBarTip.progress
-        val tipAmount = baseAmount * tipPercent / 100
-        val totalAmount = (baseAmount + tipAmount) / splitAmount
-        tvTipAmount.text = "%.2f".format(tipAmount)
-        tvTotalAmount.text = "%.2f".format(totalAmount)
-
     }
 
     private fun updateTipDescription(tipPercent: Int) {
@@ -110,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         tvTipDescription.setTextColor(color)
     }
 
-    private fun computeTipandTotal() {
+    private fun computeTipAndTotal() {
 
         if(etBaseAmount.text.isEmpty()){
             tvTipAmount.text = ""
@@ -118,12 +99,25 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        val baseAmount = etBaseAmount.text.toString().toDouble()
-        val tipPercent = seekBarTip.progress
-        val tipAmount = baseAmount * tipPercent / 100
-        val totalAmount = baseAmount + tipAmount
-        tvTipAmount.text = "%.2f".format(tipAmount)
-        tvTotalAmount.text = "%.2f".format(totalAmount)
+        if(etSplitAmount.text.isEmpty()){
+            val baseAmount = etBaseAmount.text.toString().toDouble()
+            val tipPercent = seekBarTip.progress
+            val tipAmount = baseAmount * tipPercent / 100
+            val totalAmount = baseAmount + tipAmount
+            tvTipAmount.text = "%.2f".format(tipAmount)
+            tvTotalAmount.text = "%.2f".format(totalAmount)
+        } else {
+            val baseAmount = etBaseAmount.text.toString().toDouble()
+            val splitAmount = etSplitAmount.text.toString().toInt()
+            val tipPercent = seekBarTip.progress
+            val tipAmount = baseAmount * tipPercent / 100
+            val totalAmount = (baseAmount + tipAmount) / splitAmount
+            tvTipAmount.text = "%.2f".format(tipAmount)
+            tvTotalAmount.text = "%.2f".format(totalAmount)
+        }
+
+
+
 
 
     }
